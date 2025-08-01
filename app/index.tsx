@@ -1,3 +1,4 @@
+// /app/index.tsx
 import { Redirect } from 'expo-router';
 import { Link } from 'expo-router';
 
