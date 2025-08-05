@@ -1,36 +1,55 @@
 // /app/login.tsx
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
 import { useState } from 'react';
 import { Link } from 'expo-router';
+import { Colors } from '@/constants/Colors';
+
+
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const theme = useColorScheme() ?? 'light';
+  const themeColors = Colors[theme];
+  const [error, setError] = useState('');
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      setError('Email and password are required');
+    } else {
+      setError('');
+      // Continue with authentication...
+      console.log('Login logic goes here');
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome Back</Text>
+    <View style={[styles.container, { backgroundColor: themeColors.background }]}>
+      <Text style={[styles.title, { color: themeColors.text }]}>Welcome Back</Text>
+      
 
       <TextInput
         placeholder="Email"
         placeholderTextColor="#999"
         value={email}
         onChangeText={setEmail}
-        style={styles.input}
+        style={[styles.input, { borderColor: error && !email ? 'red' : themeColors.primary }]}
         keyboardType="email-address"
         autoCapitalize="none"
       />
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+
 
       <TextInput
         placeholder="Password"
         placeholderTextColor="#999"
         value={password}
         onChangeText={setPassword}
-        style={styles.input}
+        style={[styles.input, { borderColor: error && !password ? 'red' : themeColors.primary }]}
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: themeColors.primary }]}>
         <Text style={styles.buttonText}>Sign In</Text>
       </TouchableOpacity>
 
@@ -39,7 +58,7 @@ export default function LoginScreen() {
       </TouchableOpacity>
 
       <Text style={styles.footer}>
-        Don’t have an account? <Link href="/signup" style={styles.link}>Signup</Link>
+        Don’t have an account? <Link href="/signup" style={[styles.link, { color: themeColors.primary }]}>Signup</Link>
       </Text>
     </View>
   );
@@ -94,6 +113,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#555',
   },
+  error: {
+  color: 'red',
+  marginBottom: 10,
+  textAlign: 'center',
+},
+
   link: {
     color: '#2ebfa5',
     fontWeight: 'bold',
