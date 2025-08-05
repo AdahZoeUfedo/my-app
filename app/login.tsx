@@ -49,9 +49,13 @@ export default function LoginScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: themeColors.primary }]}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
+      <TouchableOpacity 
+  style={[styles.button, { backgroundColor: themeColors.primary }]}
+  onPress={handleLogin}
+>
+  <Text style={styles.buttonText}>Log In</Text>
+</TouchableOpacity>
+
 
       <TouchableOpacity style={styles.googleButton}>
         <Text style={styles.googleText}>Continue with Google</Text>
